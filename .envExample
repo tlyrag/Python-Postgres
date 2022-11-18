@@ -1,0 +1,4 @@
+host = #Database host
+database = # Database Name
+user = #Database User ID
+password = #Database Password
