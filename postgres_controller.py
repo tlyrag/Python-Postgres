@@ -42,10 +42,10 @@ def insertSql(sql,param):
     try:
         print(param)
         conn = psycopg2.connect(
-        host=os.getenv("host"),
-        database=os.getenv("database"),
-        user=os.getenv("user"),
-        password=os.getenv("password")
+            host=os.getenv("host"),
+            database=os.getenv("database"),
+            user=os.getenv("user"),
+            password=os.getenv("password")
         )
         cur = conn.cursor()
         cur.execute(sql,(param,))
@@ -55,6 +55,28 @@ def insertSql(sql,param):
     finally:
         if conn is not None:
             conn.close()
+
+def selectSql(sql,param):
+    try:
+        #print(param)
+        conn = psycopg2.connect(
+            host=os.getenv("host"),
+            database=os.getenv("database"),
+            user=os.getenv("user"),
+            password=os.getenv("password")
+        )
+        cur = conn.cursor()
+        cur.execute(sql,(param,))
+        conn.commit()
+        return cur.fetchall()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print('Error Selecting Drink: {}'.format(error))
+        msg = 'Error Selecting Drink: {}'.format(error)
+        return {"status": 500, "msg":msg}
+    finally:
+        if conn is not None:
+            conn.close()
+
 
 
 
